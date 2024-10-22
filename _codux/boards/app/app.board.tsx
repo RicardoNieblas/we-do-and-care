@@ -25,4 +25,8 @@ const AppWrapper = createRemixStub([
 export default createBoard({
     name: 'App',
     Board: () => <AppWrapper />,
+    environmentProps: {
+        windowHeight: 737,
+        windowWidth: 968,
+    },
 });
