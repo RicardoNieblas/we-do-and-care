@@ -1,5 +1,8 @@
 node_modules
 
+.env.development.local
+.vercel/
+
 /.cache
 /public/build
 /build
