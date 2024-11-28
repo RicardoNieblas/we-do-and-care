@@ -1,0 +1,110 @@
+import React, { useState } from 'react';
+
+const RegisterForm = () => {
+  const [formData, setFormData] = useState({
+    nombre_completo: '',
+    correo: '',
+    fecha_nacimiento: '',
+    contraseña: '',
+    escuela: '',
+    rol: '',
+    es_menor: false,
+    suscrito_a_noticias: false,
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Usuario registrado exitosamente');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error al conectar con la API:', error);
+      alert('Hubo un error al registrar.');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="nombre_completo"
+        placeholder="Nombre completo"
+        value={formData.nombre_completo}
+        onChange={handleInputChange}
+      />
+      <input
+        type="email"
+        name="correo"
+        placeholder="Correo"
+        value={formData.correo}
+        onChange={handleInputChange}
+      />
+      <input
+        type="date"
+        name="fecha_nacimiento"
+        value={formData.fecha_nacimiento}
+        onChange={handleInputChange}
+      />
+      <input
+        type="password"
+        name="contraseña"
+        placeholder="Contraseña"
+        value={formData.contraseña}
+        onChange={handleInputChange}
+      />
+      <input
+        type="text"
+        name="escuela"
+        placeholder="Escuela"
+        value={formData.escuela}
+        onChange={handleInputChange}
+      />
+      <input
+        type="text"
+        name="rol"
+        placeholder="Rol"
+        value={formData.rol}
+        onChange={handleInputChange}
+      />
+      <label>
+        ¿Es menor de edad?
+        <input
+          type="checkbox"
+          name="es_menor"
+          checked={formData.es_menor}
+          onChange={handleInputChange}
+        />
+      </label>
+      <label>
+        ¿Suscribirse a noticias?
+        <input
+          type="checkbox"
+          name="suscrito_a_noticias"
+          checked={formData.suscrito_a_noticias}
+          onChange={handleInputChange}
+        />
+      </label>
+      <button type="submit">Registrar</button>
+    </form>
+  );
+};
+
+export default RegisterForm;
