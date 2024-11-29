@@ -3,6 +3,7 @@ import styles from './_index.module.scss';
 import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import commonStyles from '~/styles/common-styles.module.scss';
 import { getUrlOriginWithPath } from '~/utils';
+import { SeccionHero } from '_codux/boards/seccion-hero.board';
 
 export const loader = ({ request }: LoaderFunctionArgs) => {
     return { canonicalUrl: getUrlOriginWithPath(request.url) };
@@ -11,6 +12,7 @@ export const loader = ({ request }: LoaderFunctionArgs) => {
 export default function HomePage() {
     return (
         <div className={styles.root}>
+            <SeccionHero />
             <div className={styles.title}>WE Do and Care</div>
             <div className={styles.paragraph}>
                 <div className={styles.text}>
