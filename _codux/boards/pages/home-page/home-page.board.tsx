@@ -7,8 +7,7 @@ export default createBoard({
     name: 'Page - Home',
     Board: () => (
         <PageWrapper>
-            <SeccionHero />
-            <HomePage>
+            <HomePage />
             
         </PageWrapper>
     ),
